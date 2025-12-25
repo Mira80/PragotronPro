@@ -1,6 +1,6 @@
 {
   "name": "Pragotron PRO",
-  "version": "6.3",
+  "version": "6.8",
   "builds": [
     {
       "chipFamily": "ESP8266",
