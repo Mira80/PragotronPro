@@ -16,7 +16,7 @@ Pro nahrání firmwaru nepotřebujete žádný software ani programátorské zna
 3.  Vyberte "CONNECT" a zvolte příslušný COM port.
 4.  Klikněte na "INSTALL PRAGOTRON".
 
-👉 **[SPUSTIT WEB INSTALLER](https://vase-uzivatelske-jmeno.github.io/nazev-repozitare/)**
+👉 **[SPUSTIT WEB INSTALLER]([https://vase-uzivatelske-jmeno.github.io/nazev-repozitare/](https://mira80.github.io/PragotronWebInstaller/)**
 *(Zde prosím doplňte odkaz na vaši GitHub Pages stránku s instalátorem)*
 
 ---
