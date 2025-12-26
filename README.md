@@ -98,5 +98,116 @@ Zobrazuje aktuální stav systému.
 ### 🛡 Bezpečnostní funkce (Watchdog)
 Firmware obsahuje ochranu cívek. Pokud by procesor zamrzl nebo nastala chyba, která by nechala cívku sepnutou déle než **5 sekund**, bezpečnostní pojistka ji automaticky odpojí, aby nedošlo ke spálení vinutí hodin.
 
+
+## 🔌 Detailní Schéma Zapojení
+Pro správnou funkci detekce výpadku proudu (UPS/Power Monitor) a bezpečné řízení 24V linky je nutné dodržet toto zapojení.
+
+### Legenda k součástkám:
+* **D (Dioda):** Ideálně Schottky (např. 1N5817) pro menší úbytek napětí. Odděluje "živé" napětí od záložního kondenzátoru.
+* **C1 (Kondenzátor):** Elektrolytický, min. 1000µF / 10V (lépe 2200µF). Čím více, tím lépe. Udrží procesor naživu cca 1-2 vteřiny po výpadku, aby stihl uložit čas.
+* **R1 + R2 (Dělič):** Rezistory 10kΩ nebo 22kΩ. Slouží ke snížení vstupních 5V na úroveň bezpečnou pro pin A0 (max 3.2V).
+
+
+## 🔌 Schéma Zapojení - Rozšířené (S UPS)
+
+Toto je vylepšená varianta zapojení. Použijte ji, pokud **potřebujete** funkci zálohování času při výpadku proudu. V nastavení aplikace aktivujte funkci **"Povolit UPS (A0)"**.
+                                [ ČÁST 1: NAPÁJENÍ A UPS DETEKCE ]
+
+   Vstup 5V (USB/Zdroj)
+         |
+         +-----------+--------------------------------------------------+
+         |           |                                                  |
+         |          [R1] (Rezistor 10k-22k)                             |
+         |           |                                                  |
+         |           +----------------------> PIN A0 (Wemos)            |
+         |           |                        (Měří napětí PŘED diodou) |
+         |          [R2] (Rezistor 10k-22k)                             |
+         |           |                                                  |
+         |          GND                                                 |
+         |                                                              |
+         +-------->| D |----------+-----------+------------------------>+---> Wemos 5V
+                  (Dioda)         |           |                         |
+                                  |           |                         +---> L298N Logic 5V
+                                ===== (+)     |
+                          (C1)  =====         |
+                        2200uF    |           |
+                                  |           |
+         GND ---------------------+-----------+------------------------>+---> Wemos GND
+                                                                        |
+                                                                        +---> L298N GND
+
+
+                                [ ČÁST 2: PROPOJENÍ LOGIKY ]
+
+                     WEMOS D1 MINI                       L298N DRIVER (H-Můstek)
+                  +-----------------+                +---------------------------+
+                  |                 |                |                           |
+      (viz výše)--| 5V          GND |----------------| GND (Společná zem!)       |
+      (viz výše)--| A0           D6 |----------------| IN1 (Minuty A)            |
+                  |              D5 |----------------| IN2 (Minuty B)            |
+                  |              D0 |----------------| IN3 (Sekundy A)           |
+                  |              D7 |----------------| IN4 (Sekundy B)           |
+                  |                 |                |                           |
+                  |         (SCL) D1|----->[OLED]    | OUT1      OUT2            |
+                  |         (SDA) D2|----->[OLED]    |  |          |             |
+                  +-----------------+                +--|----------|-------------+
+                                                        |          |
+                                                    [ Linka Minut 24V ]
+                                                    (Hodiny Pragotron)
+
+                                [ ČÁST 3: NAPÁJENÍ CÍVEK ]
+
+      Zdroj 24V DC (+) -----------------------------> L298N svorka +12V/24V
+      Zdroj 24V DC (-) -----------------------------> L298N svorka GND
+
+
+
+
+## 🔌 Schéma Zapojení - Základní (Bez UPS)
+
+Toto je zjednodušená varianta zapojení. Použijte ji, pokud **nepotřebujete** funkci zálohování času při výpadku proudu. V nastavení aplikace nechte funkci "Povolit UPS (A0)" **vypnutou**.
+
+```text
+                                [ NAPÁJENÍ LOGIKY (5V) ]
+
+   Zdroj 5V (USB/DC) (+) ------------------+--------------------------> Wemos 5V
+                                           |
+                                           +--------------------------> L298N Logic +5V
+
+   Zdroj 5V (USB/DC) (-) ------------------+--------------------------> Wemos GND
+                                           |
+                                           +--------------------------> L298N GND
+
+
+                                [ PROPOJENÍ ŘÍZENÍ ]
+
+                     WEMOS D1 MINI                       L298N DRIVER (H-Můstek)
+                  +-----------------+                +---------------------------+
+                  |                 |                |                           |
+      (viz výše)--| 5V          GND |----------------| GND (Společná zem!)       |
+      (nezapojen)-| A0           D6 |----------------| IN1 (Minuty A)            |
+                  |              D5 |----------------| IN2 (Minuty B)            |
+                  |              D0 |----------------| IN3 (Sekundy A)           |
+                  |              D7 |----------------| IN4 (Sekundy B)           |
+                  |                 |                |                           |
+                  |         (SCL) D1|----->[OLED]    | OUT1      OUT2            |
+                  |         (SDA) D2|----->[OLED]    |  |          |             |
+                  +-----------------+                +--|----------|-------------+
+                                                        |          |
+                                                    [ Linka Minut 24V ]
+                                                    (Hodiny Pragotron)
+
+                                [ NAPÁJENÍ CÍVEK (24V) ]
+
+      Zdroj 24V DC (+) -----------------------------> L298N svorka +12V/24V
+      Zdroj 24V DC (-) -----------------------------> L298N svorka GND
+```
+
+### ⚡ Důležité poznámky k zapojení
+1.  **Společná zem (GND):** Je naprosto kritické, aby `GND` zdroje 24V a `GND` zdroje 5V byly propojeny na svorkovnici modulu L298N (nebo na Wemosu). Bez společné země nebude řízení fungovat a signály budou "plavat".
+2.  **Pin A0:** V tomto zapojení zůstává pin `A0` na Wemosu volný (nezapojený). Ujistěte se, že v nastavení je UPS vypnutá, jinak bude systém hlásit falešný výpadek proudu.
+3.  **Napájení logiky L298N:** Protože používáte externí 24V pro cívky, **vyjměte** na modulu L298N propojku (jumper) umístěnou nad svorkami napájení (označení `5V-EN` nebo podobné). Následně přiveďte čistých 5V ze zdroje (nebo z Wemosu) do svorky `+5V` na L298N.
+    * *Důvod:* Vestavěný stabilizátor na L298N by se při srážení napětí z 24V na 5V extrémně zahříval a mohl by shořet.
+
 ---
 *Pragotron Master Control © 2025 Miroslav Urban*
