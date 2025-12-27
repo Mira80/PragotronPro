@@ -22,12 +22,12 @@ K nahrání softwaru nepotřebujete Arduino IDE, ovladače ani stahovat binárn�
 
 ---
 
-## ✨ Co přináší verze 7.4.0
+## ✨ Co přináší verze 7.5.0
 
-* **Vektorová Ikona (SVG):** Aplikace má nyní unikátní ikonu čtvercových hodin Pragotron, která je vykreslena přímo kódem (vektorově). Je ostrá na každém zařízení a šetří paměť čipu.
-* **OLED Smart Saver:** Opravena logika šetřiče. Běžný minutový pulz hodin již nerozsvěcí displej – hodiny mohou tikat "potmě". Displej se zapne jen na vyžádání nebo při restartu.
-* **Live AJAX UI:** Tlačítka v nastavení reagují okamžitě (změna barvy/stavu) bez nutnosti zdlouhavého obnovování celé stránky.
-* **Smart Sync:** Inteligentní kalibrace, která umí hodiny nejen dohnat (zrychlené pulzy), ale i pozastavit (čekání na reálný čas).
+* **Elegantní Restart:** Už žádné chyby "Web není dostupný" po uložení nastavení. Systém nyní zobrazí vizuální odpočet (20 sekund) a poté automaticky obnoví stránku.
+* **Chytré formuláře:** Pole v nastavení (WiFi, Hostname, Čas) se nyní automaticky předvyplňují aktuálními hodnotami. Už nemusíte znovu zadávat heslo k WiFi při změně jiné položky.
+* **Vylepšená Identifikace:** Název umístění (např. "Obývák" nebo "Dílna") se nyní zobrazuje v záhlaví všech stránek aplikace pro lepší orientaci.
+* **Bezpečnější UX:** Heslo k WiFi je nyní v prohlížeči skryté (hvězdičky). Tlačítka jasně indikují, že akce vyvolá restart ("ULOŽIT A RESTARTOVAT").
 
 ---
 
