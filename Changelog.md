@@ -29,7 +29,8 @@ Tato verze se zaměřuje na výrazné zlepšení uživatelského zážitku (UX) 
 ---
 
 ## [v7.4.0] - 2025-12-26
-## Kompletní přepracování původního kódu z roku 2021
+### Kompletní přepracování původního kódu z roku 2021
+
 
 **Kompatibilita:**
 * HW Platforma: Wemos D1 Mini (ESP8266)
