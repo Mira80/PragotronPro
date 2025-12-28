@@ -1,4 +1,4 @@
-# 🕰️ Pragotron Master Control - Firmware v7.6.1
+# 🕰️ Pragotron Pro - Firmware v7.6.1
 
 **Platforma:** Wemos D1 Mini (ESP8266) + L298N Driver + OLED Shield
 **Aktuální verze:** 7.5.0
