@@ -1,5 +1,21 @@
 # Changelog
+## [v7.6.1] - 2025-12-28
+### Captive Portal & Retro UI Edition
 
+Výrazné rozšíření funkčnosti o automatický přihlašovací portál a vylepšení vizuálního stylu webového rozhraní.
+
+### 🚀 Nové funkce (New Features)
+* **Captive Portal (WiFi Manager):** V režimu přístupového bodu (AP) zařízení nyní automaticky zachytává síťový provoz. Po připojení telefonu k `Pragotron_AP` se automaticky nabídne přihlašovací stránka (funguje jako hotelová WiFi), což eliminuje nutnost ručně zadávat IP adresu `192.168.4.1`.
+* **Časovač Zastavení (Stop Timer):** U manuálního zastavení hodin lze nyní nastavit dobu v minutách (např. 60 min). Po uplynutí této doby se hodiny automaticky znovu spustí. V přehledu se zobrazuje odpočet zbývajícího času.
+* **Retro Design:** Záhlaví webové stránky bylo přepracováno do stylu překlápěcí tabule (Flip-dot/Split-flap) s větším písmem, které lépe odpovídá charakteru zařízení.
+* **Chytré Ořezávání SSID:** Na OLED displeji se nyní dlouhé názvy WiFi sítí automaticky zkracují (např. "TatoJeMoje..." místo přetečení na další řádek).
+* **Dynamický Titulek:** Název záložky v prohlížeči nyní obsahuje nastavené umístění (např. "Obývák - Pragotron PRO").
+
+### 🐛 Opravy a Vylepšení
+* **FIX:** Tlačítka ovládání (Ruční posun, Kalibrace) nyní správně indikují zablokovaný stav (červená barva, nápis "HODINY ZASTAVENY"), pokud je aktivní manuální STOP nebo časovač.
+* **UX:** Zvětšeno písmo v záhlaví pro lepší čitelnost na mobilních zařízeních.
+
+---
 ## [v7.5.0] - 2025-12-27
 ### Final UX Update & Stability Improvements
 
