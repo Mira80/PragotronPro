@@ -18,7 +18,7 @@ K nahrání softwaru nepotřebujete Arduino IDE, ovladače ani stahovat binárn�
 3.  Vyberte **"CONNECT"** a zvolte příslušný COM port.
 4.  Klikněte na **"INSTALL PRAGOTRON"**.
 
-👉 **[SPUSTIT WEB INSTALLER](https://mira80.github.io/PragotronWebInstaller/)**
+👉 **[SPUSTIT WEB INSTALLER](https://mira80.github.io/PragotronPro/)**
 
 ---
 
