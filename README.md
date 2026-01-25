@@ -22,6 +22,14 @@ K nahrání softwaru nepotřebujete Arduino IDE, ovladače ani stahovat binárn�
 
 ---
 
+## 🔄 Máte už hodiny doma? (Aktualizace)
+
+Pokud už hodiny používáte a potřebujete jen nahrát novou verzi ze souboru (`.bin`), který jste obdrželi či stáhli odsud, nemusíte nic instalovat.
+
+👉 **[Přejít na návod: Jak nahrát aktualizaci ze souboru](#-návod-pro-uživatele-jak-nahrát-aktualizaci-ze-souboru)**
+
+---
+
 ## ✨ Novinky ve verzi v7.8.0 (Stable)
 
 * **🛡️ Robustní řízení minut (Zero-Loss Logic):** Zcela přepsaná logika generování impulzů. Systém již nečeká na "nultou sekundu", ale aktivně sleduje změnu času. Tím je zaručeno, že hodiny **nevynechají minutu** ani při krátkodobém zaseknutí WiFi nebo synchronizaci NTP.
