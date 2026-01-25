@@ -20,15 +20,14 @@ K nahrání softwaru nepotřebujete Arduino IDE, ovladače ani stahovat binárn�
 
 👉 **[SPUSTIT WEB INSTALLER](https://mira80.github.io/PragotronPro/)**
 
----
+  ---
 
 ## 🔄 Máte už hodiny doma? (Aktualizace)
 
-Pokud už hodiny používáte a potřebujete jen nahrát novou verzi ze souboru (`.bin`), který jste obdrželi či stáhli odsud, nemusíte nic instalovat.
+Pokud už hodiny používáte a potřebujete jen nahrát novou verzi ze souboru (`.bin`), který jste obdrželi e-mailem, nemusíte nic instalovat ani připojovat kabelem.
 
 👉 **[Přejít na návod: Jak nahrát aktualizaci ze souboru](#-návod-pro-uživatele-jak-nahrát-aktualizaci-ze-souboru)**
-
----
+  ---
 
 ## ✨ Novinky ve verzi v7.8.0 (Stable)
 
@@ -94,3 +93,38 @@ Vyberte si variantu podle toho, zda potřebujete zálohu při výpadku proudu (U
          GND ---------------------+-----------+------------------------>+---> Wemos GND
                                                                         |
                                                                         +---> L298N GND
+
+                                                                        ---
+
+## 🆘 Návod pro uživatele: Jak nahrát aktualizaci ze souboru
+
+Pokud jste obdrželi aktualizační soubor e-mailem (koncovka `.bin`), postupujte podle tohoto návodu. K nahrání nepotřebujete žádné kabely, probíhá to bezdrátově.
+
+**Co budete potřebovat:**
+* Počítač nebo chytrý telefon.
+* Soubor s aktualizací (např. `pragotron_7.8.0.bin`) uložený ve vašem zařízení.
+
+### Krok 1: Připojení k hodinám
+Musíte být na stejné WiFi síti jako hodiny.
+* **Jste doma?** Ujistěte se, že váš telefon/počítač je připojen ke stejné domácí WiFi, na kterou jste hodiny dříve nastavili.
+* **Jste u hodin poprvé nebo nemají WiFi?** V seznamu WiFi sítí ve svém telefonu najděte síť **`Pragotron_AP`** a připojte se k ní.
+
+### Krok 2: Otevření ovládání
+1.  Otevřete internetový prohlížeč (Chrome, Safari, Edge...).
+2.  Do adresního řádku napište **IP adresu** hodin a potvrďte.
+    * *Tip: IP adresu najdete na malém displeji hodin ihned po jejich zapnutí (např. `192.168.1.45`).*
+    * *Pokud jste připojeni k `Pragotron_AP`, adresa je vždy:* **`192.168.4.1`**
+
+### Krok 3: Nahrání souboru
+1.  V menu hodin klikněte na tlačítko **⚙ Nastavení**.
+2.  Sjeďte úplně dolů do sekce **🛠 Údržba**.
+3.  Klikněte na modré tlačítko **⬆ Aktualizace Firmware**.
+4.  Klikněte na **"Vybrat soubor"** (nebo "Zvolit") a najděte stažený `.bin` soubor ve vašem zařízení.
+5.  Klikněte na tlačítko **🚀 NAHRÁT A RESTARTOVAT**.
+
+### Krok 4: Hotovo
+Objeví se lišta průběhu. **V tuto chvíli neodpojujte hodiny ze zásuvky!**
+Po dokončení (cca 1 minuta) se hodiny samy restartují a naběhnou s novou verzí programu.
+
+> **Jak ověřím verzi?**
+> Jděte znovu do menu *Nastavení* -> *Aktualizace Firmware*. Dole uvidíte aktuální datum sestavení (např. `Build: Jan 25 2026`).
