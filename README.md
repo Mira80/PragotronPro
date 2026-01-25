@@ -93,7 +93,7 @@ Vyberte si variantu podle toho, zda potřebujete zálohu při výpadku proudu (U
          GND ---------------------+-----------+------------------------>+---> Wemos GND
                                                                         |
                                                                         +---> L298N GND
-
+```
                                                                         ---
 
 ## 🆘 Návod pro uživatele: Jak nahrát aktualizaci ze souboru
