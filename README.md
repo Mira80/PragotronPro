@@ -1,7 +1,7 @@
-# 🕰️ Pragotron Pro - Firmware v7.8.0
+# 🕰️ Pragotron Pro - Firmware v8.1.1
 
 **Platforma:** Wemos D1 Mini (ESP8266) + L298N Driver + OLED Shield
-**Aktuální verze:** 7.8.0
+**Aktuální verze:** 8.1.1
 
 Vítejte v oficiálním repozitáři pro **Pragotron Master Control**. Tento projekt promění čip ESP8266 v profesionální řídící jednotku pro podružné hodiny (systém Pragotron/Elektročas) s minutovými nebo sekundovými pulzy.
 
@@ -29,13 +29,18 @@ Pokud už hodiny používáte a potřebujete jen nahrát novou verzi ze souboru 
 👉 **[Přejít na návod: Jak nahrát aktualizaci ze souboru](#-návod-pro-uživatele-jak-nahrát-aktualizaci-ze-souboru)**
   ---
 
-## ✨ Novinky ve verzi v7.8.0 (Stable)
+## ✨ Novinky ve verzi v8.1.1 (Beta)
 
-* **🛡️ Robustní řízení minut (Zero-Loss Logic):** Zcela přepsaná logika generování impulzů. Systém již nečeká na "nultou sekundu", ale aktivně sleduje změnu času. Tím je zaručeno, že hodiny **nevynechají minutu** ani při krátkodobém zaseknutí WiFi nebo synchronizaci NTP.
-* **📅 Datum sestavení (Build Time):** V menu *Aktualizace* a v patičce *Nápovědy* se nyní zobrazuje přesné datum a čas kompilace firmwaru. Máte tak jistotu, že běžíte na nejnovější verzi.
-* **🎨 Retro Design:** Stabilizované grafické rozhraní ve stylu překlápěcích hodin (Split-flap).
-* **Captive Portal:** Automatické přihlášení do konfigurace po připojení k `Pragotron_AP`.
-* **Smart Features:** Zachovány funkce jako *Smart Kalibrace*, *Stop Timer* (časovač zastavení) a *Dynamický titulek* webu podle umístění hodin.
+* **📶 Chytré připojení (Smart Connectivity):** Kompletně přepracované nastavení sítě.
+    * **WiFi Scanner:** Tlačítko pro automatické vyhledání okolních sítí (není třeba ručně vypisovat SSID).
+    * **Dual Mode:** Připojování k domácí WiFi probíhá na pozadí **bez restartu**. Přímo na stránce vidíte živě stav a přidělenou IP adresu.
+    * **Zobrazení hesla:** Možnost odkrýt zadávané heslo pro kontrolu před uložením.
+* **🛟 Záchranná brzda (Auto-AP Fallback):** Pokud hodiny ztratí spojení s vaší WiFi (např. při změně routeru), systém to rozpozná a automaticky znovu aktivuje vlastní přístupový bod (`Pragotron_AP`).
+* **⚡ Hardwarová flexibilita:**
+    * **Reverzní polarita:** Možnost softwarově přehodit polaritu výstupů (prohození lichého a sudého pulzu) přímo v nastavení.
+    * **Ochrana cívek:** Implementovány "tvrdé limity" pro délku impulzů (max 2000 ms pro minuty, 500 ms pro sekundy), což brání poškození hodin při chybě uživatele.
+* **🚀 Optimalizace paměti (Lite Core):** Odstraněním náročných šifrovacích knihoven se uvolnilo obrovské množství RAM. To zajišťuje maximální stabilitu webového serveru a spolehlivou NTP synchronizaci i na slabší WiFi.
+* **🛠️ Robustní systém:** Vylepšené ukládání konfigurace a ošetření JavaScriptu proti problémům s mezipamětí (cache) prohlížeče.
 
 ---
 
