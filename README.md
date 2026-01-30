@@ -1,4 +1,4 @@
-# 🕰️ Pragotron Pro - Firmware v8.1.1
+# 🕰️ Pragotron Pro - Firmware v8.1.1 (Beta)
 
 **Platforma:** Wemos D1 Mini (ESP8266) + L298N Driver + OLED Shield
 **Aktuální verze:** 8.1.1
