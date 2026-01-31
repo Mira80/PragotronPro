@@ -1,4 +1,36 @@
 # Changelog
+
+## [v8.1.4] - 2026-01-31
+### Stable Lite & Logic Repair Edition
+
+Klíčová verze zaměřená na maximální stabilitu paměti (RAM), opravu logiky řízení hodin a nové možnosti připojení. Odstraněna podpora HTTPS pro zvýšení spolehlivosti.
+
+### 🚀 Nové funkce (New Features)
+* **Smart Connectivity (WiFi Scanner):** Kompletně nové rozhraní pro připojení.
+    * **Scanner:** Tlačítko pro vyhledání okolních sítí (není třeba ručně psát SSID).
+    * **Live Connect:** Připojení k domácí WiFi probíhá na pozadí bez nutnosti restartu.
+    * **Show Password:** Možnost zobrazit zadávané heslo.
+* **Auto-AP Fallback (Záchranná brzda):** Pokud hodiny ztratí spojení s WiFi (nebo se změní router), systém to pozná a automaticky znovu aktivuje vlastní AP (`Pragotron_AP`).
+* **Hardwarová Flexibilita:**
+    * **Reverzní polarita:** Možnost softwarově otočit řízení cívky (sudá/lichá) v nastavení.
+    * **Ochrana cívek:** Implementovány tvrdé limity délky impulzu (max 2000ms), aby nedošlo k přehřátí cívky při chybě uživatele.
+
+### ⚡ Optimalizace (Optimizations)
+* **Lite Core (RAM Boost):** Odstraněny náročné šifrovací knihovny (SSL/HTTPS). Webové rozhraní je díky tomu výrazně rychlejší a stabilnější, nedochází k pádům `HTTP -1` (Out of Memory).
+
+### 🐛 Kritické Opravy Logiky (Logic Fixes)
+* **FIX: Tichý Start (Silent Start):** Opravena chyba, kdy hodiny ihned po startu (při získání času z NTP) vyslaly jeden falešný impulz navíc. Nyní první čas pouze uloží do paměti.
+* **FIX: Zastavení bez dohánění (No-Catch-Up):** Při aktivaci funkce *Manuální Zastavení* (STOP) se již pulzy nepřičítají do fronty. Po odblokování hodin tak nedochází k nechtěnému "docvakávání" zameškaného času.
+
+---
+## [v7.8.0] - 2026-01-15
+### Zero-Loss Logic & Build Info
+
+* **🛡️ Robustní řízení minut (Zero-Loss Logic):** Zcela přepsaná logika generování impulzů. Systém již nečeká na "nultou sekundu", ale aktivně sleduje změnu času. Tím je zaručeno, že hodiny **nevynechají minutu** ani při krátkodobém zaseknutí WiFi nebo synchronizaci NTP.
+* **📅 Datum sestavení (Build Time):** V menu *Aktualizace* a v patičce *Nápovědy* se nyní zobrazuje přesné datum a čas kompilace firmwaru.
+* **🎨 Refined Design:** Drobná vylepšení CSS stylů pro "Flip-clock" vzhled.
+
+---
 ## [v7.6.1] - 2025-12-28
 ### Captive Portal & Retro UI Edition
 
