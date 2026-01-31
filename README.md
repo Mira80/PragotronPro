@@ -1,4 +1,4 @@
-# 🕰️ Pragotron Pro - Firmware v8.1.1 (Beta)
+# 🕰️ Pragotron Pro - Firmware v8.1.4 (Beta)
 
 **Platforma:** Wemos D1 Mini (ESP8266) + L298N Driver + OLED Shield
 **Aktuální verze:** 8.1.1
@@ -29,18 +29,21 @@ Pokud už hodiny používáte a potřebujete jen nahrát novou verzi ze souboru 
 👉 **[Přejít na návod: Jak nahrát aktualizaci ze souboru](#-návod-pro-uživatele-jak-nahrát-aktualizaci-ze-souboru)**
   ---
 
-## ✨ Novinky ve verzi v8.1.1 (Beta)
+## 🔧 Opravy a vylepšení ve verzi v8.1.4
 
-* **📶 Chytré připojení (Smart Connectivity):** Kompletně přepracované nastavení sítě.
-    * **WiFi Scanner:** Tlačítko pro automatické vyhledání okolních sítí (není třeba ručně vypisovat SSID).
-    * **Dual Mode:** Připojování k domácí WiFi probíhá na pozadí **bez restartu**. Přímo na stránce vidíte živě stav a přidělenou IP adresu.
-    * **Zobrazení hesla:** Možnost odkrýt zadávané heslo pro kontrolu před uložením.
-* **🛟 Záchranná brzda (Auto-AP Fallback):** Pokud hodiny ztratí spojení s vaší WiFi (např. při změně routeru), systém to rozpozná a automaticky znovu aktivuje vlastní přístupový bod (`Pragotron_AP`).
-* **⚡ Hardwarová flexibilita:**
-    * **Reverzní polarita:** Možnost softwarově přehodit polaritu výstupů (prohození lichého a sudého pulzu) přímo v nastavení.
-    * **Ochrana cívek:** Implementovány "tvrdé limity" pro délku impulzů (max 2000 ms pro minuty, 500 ms pro sekundy), což brání poškození hodin při chybě uživatele.
-* **🚀 Optimalizace paměti (Lite Core):** Odstraněním náročných šifrovacích knihoven se uvolnilo obrovské množství RAM. To zajišťuje maximální stabilitu webového serveru a spolehlivou NTP synchronizaci i na slabší WiFi.
-* **🛠️ Robustní systém:** Vylepšené ukládání konfigurace a ošetření JavaScriptu proti problémům s mezipamětí (cache) prohlížeče.
+Tato verze se zaměřuje na logickou správnost řízení hodin a stabilitu systému.
+
+* **🔕 Oprava "Tichého startu" (Silent Start Fix):**
+    * **Problém:** V předchozí verzi mohly hodiny ihned po připojení k WiFi (NTP synchronizaci) vyslat jeden falešný impulz navíc, protože přechod z času "0:00" na aktuální čas (např. "12:00") vyhodnotily jako změnu minuty.
+    * **Oprava:** Systém nyní startuje s "neznámým" časem. První získaný reálný čas pouze uloží do paměti bez fyzické akce. První impulz přijde až při skutečném přechodu na další minutu.
+
+* **🛑 Oprava logiky Zastavení (No-Catch-Up Logic):**
+    * **Problém:** Při aktivaci funkce *Manuální Zastavení* (STOP) se pulzy stále sčítaly do "Fronty" na pozadí. Po zrušení zastavení se hodiny snažily zběsile dohnat všechen čas, po který stály.
+    * **Oprava:** Nyní systém během režimu STOP (nebo čekání při kalibraci) nadále sleduje reálný čas, aby se neztratil, ale **nepřidává** tyto minuty do fronty k odbavení. Po odblokování hodiny pokračují v běžném taktu 1:1, aniž by doháněly pauzu.
+
+* **💻 Stabilita systému (Lite Core):**
+    * Kompletní odstranění SSL knihoven pro uvolnění paměti RAM (řeší pády při HTTP -1).
+    * Doplněny a opraveny definice všech HTML stránek (Update, Help), které v přechodných verzích mohly chybět.
 
 ---
 
