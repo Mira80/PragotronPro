@@ -1,7 +1,7 @@
-# 🕰️ Pragotron Pro - Firmware v8.1.4 (Beta)
+# 🕰️ Pragotron Pro - Firmware v8.2.2
 
-**Platforma:** Wemos D1 Mini (ESP8266) + L298N Driver + OLED Shield
-**Aktuální verze:** 8.1.1
+**Platforma:** Wemos D1 Mini (ESP8266) + L298N Driver + OLED Shield + UPS Modul
+**Aktuální verze:** 8.2.2 (The Memory & UPS Edition)
 
 Vítejte v oficiálním repozitáři pro **Pragotron Master Control**. Tento projekt promění čip ESP8266 v profesionální řídící jednotku pro podružné hodiny (systém Pragotron/Elektročas) s minutovými nebo sekundovými pulzy.
 
@@ -29,23 +29,23 @@ Pokud už hodiny používáte a potřebujete jen nahrát novou verzi ze souboru 
 👉 **[Přejít na návod: Jak nahrát aktualizaci ze souboru](#-návod-pro-uživatele-jak-nahrát-aktualizaci-ze-souboru)**
   ---
 
-## 🔧 Opravy a vylepšení ve verzi v8.1.4
+## 🔧 Novinky a vylepšení (Verze 8.2.x)
 
-Tato verze se zaměřuje na logickou správnost řízení hodin a stabilitu systému.
+Tato série aktualizací přináší podporu bateriových záloh.
 
-* **🔕 Oprava "Tichého startu" (Silent Start Fix):**
-    * **Problém:** V předchozí verzi mohly hodiny ihned po připojení k WiFi (NTP synchronizaci) vyslat jeden falešný impulz navíc, protože přechod z času "0:00" na aktuální čas (např. "12:00") vyhodnotily jako změnu minuty.
-    * **Oprava:** Systém nyní startuje s "neznámým" časem. První získaný reálný čas pouze uloží do paměti bez fyzické akce. První impulz přijde až při skutečném přechodu na další minutu.
+* **🔋 Profesionální UPS ochrana s vizuálním varováním na Webu i OLED:**
+    * Systém je nyní plně připraven na napájení z modulu s 18650 článkem.
+    * Při výpadku proudu hodiny okamžitě a bezpečně uloží svůj stav do Flash paměti (LittleFS), odpojí cívky pro úsporu energie a přejdou do režimu přežití.
+    * OLED displej se probudí a začne svítit varovným nápisem "POWER FAIL".
+    * Webové rozhraní (přes mobil) okamžitě zobrazí červený výstražný panel.
+* **🧠 Fázová historie (Sudá/Lichá):**
+    * V dřívějších verzích hrozilo při opakovaném výpadku proudu nebo hromadném docvakávání přehození polarity (hodiny dostaly dva liché pulzy po sobě a krok se neprovedl).
+    * **Oprava:** Wemos si již nepamatuje "poslední polaritu". Místo toho má v sobě naprogramovanou matematickou časovou osu. Před každým pulzem vypočítá: *"Jaký je reálný čas? Kolik pulzů chybí? Tedy, na jaké fyzické minutě teď hodiny stojí?"* Z toho odvodí absolutně správný následující krok.
+* **⏳ Paměťový kalendář pro SmartWait a Stop:**
+    * Pokud hodiny zrovna stojí (uživatel zapnul na webu pauzu, nebo se čeká až reálný čas "doběhne" hodiny) a vypadne proud, Wemos si tento fakt nově zapamatuje.
+    * Při obnově napájení systém  odečte plánovanou pauzu od doby trvání výpadku proudu, takže nevznikne žádný deficit zmeškaných pulzů!
 
-* **🛑 Oprava logiky Zastavení (No-Catch-Up Logic):**
-    * **Problém:** Při aktivaci funkce *Manuální Zastavení* (STOP) se pulzy stále sčítaly do "Fronty" na pozadí. Po zrušení zastavení se hodiny snažily zběsile dohnat všechen čas, po který stály.
-    * **Oprava:** Nyní systém během režimu STOP (nebo čekání při kalibraci) nadále sleduje reálný čas, aby se neztratil, ale **nepřidává** tyto minuty do fronty k odbavení. Po odblokování hodiny pokračují v běžném taktu 1:1, aniž by doháněly pauzu.
-
-* **💻 Stabilita systému (Lite Core):**
-    * Kompletní odstranění SSL knihoven pro uvolnění paměti RAM (řeší pády při HTTP -1).
-    * Doplněny a opraveny definice všech HTML stránek (Update, Help), které v přechodných verzích mohly chybět.
-
----
+----
 
 ## 🔌 Zapojení Hardware (Wemos D1 Mini + L298N)
 
@@ -75,32 +75,43 @@ Vyberte si variantu podle toho, zda potřebujete zálohu při výpadku proudu (U
 ### VARIANTA A: Rozšířené zapojení (s UPS Detekcí)
 *Použijte, pokud chcete, aby hodiny po výpadku proudu automaticky "dohnaly" čas.*
 * **Nastavení:** V aplikaci povolte: `Povolit UPS (A0)`.
+  V aktuální verzi bylo upuštěno od kondenzátoru a ten byl nahrazen UPS modulem s článkem 18650. Při výpadku zdroj se zastaví pulzy, wemos však jede dál z akumulátoru.
 
 ```text
                                 [ NAPÁJENÍ A UPS DETEKCE ]
 
-   Vstup 5V (USB/Zdroj)
+ [ ZAPOJENÍ S UPS MODULEM A BYPASS DIODOU ]
+Napájeni 5V jde do UPS modulu, zároveň přes schottky diodu napájí wemos.
+Přes odporový dělič je vstupní napětí před diodou připojeno na A0
+Výstup UPS modulu je napojeno na wemos.
+Při výpadku napájení je ztráta detekována pomocí A0, díky UPS však wemos funguje dál
+
+       Vstup 5V (USB/Zdroj)
          |
-         +-----------+--------------------------------------------------+
-         |           |                                                  |
-         |          [R1] (Rezistor 10k-22k)                             |
-         |           |                                                  |
-         |           +----------------------> PIN A0 (Wemos)            |
-         |           |                        (Měří napětí PŘED diodou) |
-         |          [R2] (Rezistor 10k-22k)                             |
-         |           |                                                  |
-         |          GND                                                 |
-         |                                                              |
-         +-------->| D |----------+-----------+------------------------>+---> Wemos 5V
-                  (Dioda)         |           |                         |
-                                  |           |                         +---> L298N Logic 5V
-                                ===== (+)     |
-                          (C1)  =====         |
-                        2200uF    |           |
-                                  |           |
-         GND ---------------------+-----------+------------------------>+---> Wemos GND
-                                                                        |
-                                                                        +---> L298N GND
+         +-----------+----------------------+
+         |           |                      |
+         |          [R1] (Rezistor 10k)     |
+         |           |                      |
+         |           +-------------------------------> PIN A0 (Wemos)
+         |           |                      |          (Měří napětí PŘED diodou)
+         |          [R2] (Rezistor 15k)     |
+         |           |                      |
+         |          GND                     v (IN+ je PŘED diodou)
+         |                        +-------------------+
+         |                        |        IN+        |
+         |                        |     UPS modul     |
+         |                        | (18650 Baterie)   |
+         |                        |              OUT+ |----+-------------------> Wemos 5V
+         |                        |                   |    |                 
+         |                        | IN-          OUT- |    | (OUT+ je ZA diodou)             
+         |                        +--+-------------+--+    |                 
+         |                           |             |       | 
+         +-------->| D |-------------|-------------|-------+                 
+                  (Dioda)            |             |                         
+                                     |             |                         
+         GND ------------------------+-------------+---------------------------> Wemos GND
+                                                                             
+                                                                             (Propojit s GND na L298N)
 ```
                                                                         ---
 
