@@ -5,7 +5,7 @@
     {
       "chipFamily": "ESP8266",
       "parts": [
-        { "path": "pragotron-8.2.2.bin", "offset": 0 }
+        { "path": "pragotron-8.2.4.bin", "offset": 0 }
       ]
     }
   ]
