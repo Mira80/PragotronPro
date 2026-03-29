@@ -1,7 +1,7 @@
-# 🕰️ Pragotron Pro - Firmware v8.2.2
+# 🕰️ Pragotron Pro - Firmware v8.2.4
 
 **Platforma:** Wemos D1 Mini (ESP8266) + L298N Driver + OLED Shield + UPS Modul
-**Aktuální verze:** 8.2.2 (The Memory & UPS Edition)
+**Aktuální verze:** 8.2.4 (Robust DST & UPS Edition)
 
 Vítejte v oficiálním repozitáři pro **Pragotron Master Control**. Tento projekt promění čip ESP8266 v profesionální řídící jednotku pro podružné hodiny (systém Pragotron/Elektročas) s minutovými nebo sekundovými pulzy.
 
@@ -11,7 +11,7 @@ Vítejte v oficiálním repozitáři pro **Pragotron Master Control**. Tento pro
 
 ## 🚀 Rychlá Instalace (Web Installer)
 
-K nahrání softwaru nepotřebujete Arduino IDE, ovladače ani stahovat binární soubory. Stačí prohlížeč (Chrome/Edge) a USB kabel.
+K nahrání softwaru nepotřebujete Arduino IDE, ovladače ani stahovat binární soubory. Stačí prohlížeč (Chrome/Edge) a USB kabel. Je potřeba instalovat ovladac wemosu, u cinskych modulu je to obvykle ovladac CH340
 
 1.  Připojte Wemos D1 Mini k počítači přes USB.
 2.  Klikněte na tlačítko níže (otevře instalátor).
@@ -31,8 +31,13 @@ Pokud už hodiny používáte a potřebujete jen nahrát novou verzi ze souboru 
 
 ## 🔧 Novinky a vylepšení (Verze 8.2.x)
 
-Tato série aktualizací přináší podporu bateriových záloh.
+Tato série aktualizací přináší podporu bateriových záloh a absolutní neprůstřelnost při změně času.
 
+* **☀️ Robustní letní čas (Nezničitelný DST Engine):**
+    * Kompletně přepsaná logika pro letní/zimní čas. Systém už nečeká na "jednu konkrétní vteřinu" pro přepnutí, ale neustále matematicky ověřuje platnost letního času.
+    * Díky tomu hodiny nepřijdou o změnu času ani v případě, že je Wemos zrovna bez proudu nebo se restartuje.
+    * OLED displej, webové rozhraní i funkce Kalibrace nyní plně a správně zohledňují DST posun.
+    * **Kalibrace přes půlnoc:** Vylepšený výpočet zajišťuje správné srovnání času i v případě, že kalibrujete hodiny těsně přes půlnoc.
 * **🔋 Profesionální UPS ochrana s vizuálním varováním na Webu i OLED:**
     * Systém je nyní plně připraven na napájení z modulu s 18650 článkem.
     * Při výpadku proudu hodiny okamžitě a bezpečně uloží svůj stav do Flash paměti (LittleFS), odpojí cívky pro úsporu energie a přejdou do režimu přežití.
@@ -43,7 +48,7 @@ Tato série aktualizací přináší podporu bateriových záloh.
     * **Oprava:** Wemos si již nepamatuje "poslední polaritu". Místo toho má v sobě naprogramovanou matematickou časovou osu. Před každým pulzem vypočítá: *"Jaký je reálný čas? Kolik pulzů chybí? Tedy, na jaké fyzické minutě teď hodiny stojí?"* Z toho odvodí absolutně správný následující krok.
 * **⏳ Paměťový kalendář pro SmartWait a Stop:**
     * Pokud hodiny zrovna stojí (uživatel zapnul na webu pauzu, nebo se čeká až reálný čas "doběhne" hodiny) a vypadne proud, Wemos si tento fakt nově zapamatuje.
-    * Při obnově napájení systém  odečte plánovanou pauzu od doby trvání výpadku proudu, takže nevznikne žádný deficit zmeškaných pulzů!
+    * Při obnově napájení systém odečte plánovanou pauzu od doby trvání výpadku proudu, takže nevznikne žádný deficit zmeškaných pulzů!
 
 ----
 
@@ -75,7 +80,9 @@ Vyberte si variantu podle toho, zda potřebujete zálohu při výpadku proudu (U
 ### VARIANTA A: Rozšířené zapojení (s UPS Detekcí)
 *Použijte, pokud chcete, aby hodiny po výpadku proudu automaticky "dohnaly" čas.*
 * **Nastavení:** V aplikaci povolte: `Povolit UPS (A0)`.
-  V aktuální verzi bylo upuštěno od kondenzátoru a ten byl nahrazen UPS modulem s článkem 18650. Při výpadku zdroj se zastaví pulzy, wemos však jede dál z akumulátoru.
+  V aktuální verzi bylo upuštěno od kondenzátoru a ten byl nahrazen 5V UPS modulem s článkem 18650. Při výpadku zdroj se zastaví pulzy, wemos však jede dál z akumulátoru.
+  
+  https://www.aliexpress.com/item/1005009139076753.html?spm=a2g0o.detail.pcDetailBottomMoreOtherSeller.4.5f93DQvUDQvUmX&gps-id=pcDetailBottomMoreOtherSeller&scm=1007.40050.354490.0&scm_id=1007.40050.354490.0&scm-url=1007.40050.354490.0&pvid=6f8ea4db-ffe3-406d-91f6-461c284b52aa&_t=gps-id:pcDetailBottomMoreOtherSeller,scm-url:1007.40050.354490.0,pvid:6f8ea4db-ffe3-406d-91f6-461c284b52aa,tpp_buckets:668%232846%238110%231995&pdp_ext_f=%7B%22order%22%3A%22597%22%2C%22eval%22%3A%221%22%2C%22sceneId%22%3A%2230050%22%2C%22fromPage%22%3A%22recommend%22%7D&pdp_npi=6%40dis%21CZK%2154.14%2147.18%21%21%212.49%212.17%21%40211b81a317747779153341702ecea7%2112000056589717493%21rec%21CZ%21193171986%21XZ%211%210%21n_tag%3A-29919%3Bd%3A7c1950ac%3Bm03_new_user%3A-29895&utparam-url=scene%3ApcDetailBottomMoreOtherSeller%7Cquery_from%3A%7Cx_object_id%3A1005009139076753%7C_p_origin_prod%3A
 
 ```text
                                 [ NAPÁJENÍ A UPS DETEKCE ]
