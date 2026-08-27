@@ -1,11 +1,11 @@
 {
   "name": "Pragotron PRO",
-  "version": "8.2.2",
+  "version": "8.2.5",
   "builds": [
     {
       "chipFamily": "ESP8266",
       "parts": [
-        { "path": "pragotron-8.2.4.bin", "offset": 0 }
+        { "path": "pragotron-8.2.5.bin", "offset": 0 }
       ]
     }
   ]
