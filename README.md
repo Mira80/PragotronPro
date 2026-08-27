@@ -1,7 +1,7 @@
-# 🕰️ Pragotron Pro - Firmware v8.2.4
+# 🕰️ Pragotron Pro - Firmware v8.2.5
 
 **Platforma:** Wemos D1 Mini (ESP8266) + L298N Driver + OLED Shield + UPS Modul
-**Aktuální verze:** 8.2.4 (Robust DST & UPS Edition)
+**Aktuální verze:** 8.2.5 (Robust DST & UPS Edition)
 
 Vítejte v oficiálním repozitáři pro **Pragotron Master Control**. Tento projekt promění čip ESP8266 v profesionální řídící jednotku pro podružné hodiny (systém Pragotron/Elektročas) s minutovými nebo sekundovými pulzy.
 
