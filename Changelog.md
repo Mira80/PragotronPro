@@ -1,5 +1,9 @@
 # Changelog
 
+## [v8.2.5] - 2026-08-27
+Oprava chyby, kdy horší konektivita při startu způsobila posun zobrazeného času o 30 min
+Oprava chyby webového rozhraní, kdy se nezobrazila požadovaná webová stránka
+
 ## [v8.1.4] - 2026-01-31
 ### Stable Lite & Logic Repair Edition
 
